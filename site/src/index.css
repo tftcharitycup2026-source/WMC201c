@@ -1,0 +1,179 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ong: #89583d;
+  --color-earth: #493326;
+  --color-brick: #a84f37;
+  --color-paper: #f3ebdd;
+  --color-sand: #d9c6ab;
+  --color-coal: #292621;
+  --font-sans: 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-coal);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-brick);
+    color: var(--color-paper);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brick);
+    outline-offset: 3px;
+  }
+}
+
+/* ------------- Typography ------------- */
+.display {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+.story p,
+p.story {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: manual;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  line-height: 1.85;
+}
+.story p + p {
+  margin-top: 1.4em;
+}
+.dropcap::first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 4.6em;
+  line-height: 0.82;
+  padding: 0.06em 0.12em 0 0;
+  color: var(--color-brick);
+}
+.quote-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+}
+.chapter-num {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  -webkit-text-stroke: 1px currentColor;
+  color: transparent;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ------------- Split text masks -------------
+   Padding giữ chỗ cho dấu tiếng Việt (ấ, ỗ, ặ…) để không bị cắt khi che mặt nạ. */
+.sw {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.18em 0.04em 0.12em;
+  margin: -0.18em -0.04em -0.12em;
+}
+.sw-i {
+  display: inline-block;
+  will-change: transform;
+}
+.word-nowrap {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* ------------- Laterite texture (khung chờ ảnh thật) ------------- */
+.laterite {
+  background-color: var(--tone, #89583d);
+  background-image:
+    url('/textures/laterite.svg'),
+    radial-gradient(120% 90% at 20% 10%, rgb(255 255 255 / 0.1), transparent 55%),
+    radial-gradient(100% 80% at 90% 100%, rgb(0 0 0 / 0.35), transparent 60%);
+  background-size: 640px 640px, cover, cover;
+}
+.tone-ong { --tone: #89583d; }
+.tone-earth { --tone: #5a3f2e; }
+.tone-brick { --tone: #a05039; }
+.tone-sand { --tone: #b89a78; }
+.tone-coal { --tone: #3a322b; }
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  pointer-events: none;
+  background-image: url('/textures/grain.svg');
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+}
+
+/* ------------- Custom cursor ------------- */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+html.has-cursor iframe {
+  cursor: auto !important;
+}
+
+/* Ảnh: phóng nhẹ khi rê chuột */
+.media-hover .media-inner {
+  transition: transform 1.1s var(--ease-out-expo);
+}
+.media-hover:hover .media-inner {
+  transform: scale(1.06);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes scrollhint {
+  0% { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(220%); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
